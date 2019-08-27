@@ -14,6 +14,7 @@
             name="nome"
             v-model="nome"
           />
+          <p class="error--message" v-if="feedback">{{ feedback }}</p>
           <v-text-field
             type="text"
             color="#db338f"
@@ -37,6 +38,7 @@
 
 <script>
 import slugify from "slugify";
+import db from "@/firebase/init";
 
 export default {
   name: "Signup",
@@ -56,6 +58,14 @@ export default {
           replacement: "-",
           remove: /[$*_+~.()'"!\-:@]/g,
           lower: true
+        });
+        let ref = db.collection("users").doc(this.slug);
+        ref.get().then(doc => {
+          if (doc.exists) {
+            this.feedback = "Este nome já está sendo utilizado!";
+          } else {
+            this.feedback = "Este nome pode ser utilizado!";
+          }
         });
       } else {
         return (this.feedback = "Gentileza preencher o nome completo!");
@@ -90,5 +100,12 @@ export default {
 .v-btn {
   width: 100%;
   margin-top: 30px;
+}
+
+.error--message {
+  color: #ff5252;
+  font-size: 0.7rem;
+  text-align: center;
+  margin: -15px 0 0 0;
 }
 </style>
