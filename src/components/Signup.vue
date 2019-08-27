@@ -14,7 +14,6 @@
             name="nome"
             v-model="nome"
           />
-          <p class="error--message" v-if="feedback">{{ feedback }}</p>
           <v-text-field
             type="text"
             color="#db338f"
@@ -29,6 +28,7 @@
             name="senha"
             v-model="senha"
           />
+          <p class="error--message" v-if="feedback">{{ feedback }}</p>
           <v-btn color="#db338f" dark @click="signup">Registrar</v-btn>
         </v-form>
       </div>
@@ -39,6 +39,8 @@
 <script>
 import slugify from "slugify";
 import db from "@/firebase/init";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 export default {
   name: "Signup",
@@ -53,7 +55,7 @@ export default {
   },
   methods: {
     signup() {
-      if (this.nome) {
+      if (this.nome && this.email && this.senha) {
         this.slug = slugify(this.nome, {
           replacement: "-",
           remove: /[$*_+~.()'"!\-:@]/g,
@@ -64,11 +66,17 @@ export default {
           if (doc.exists) {
             this.feedback = "Este nome já está sendo utilizado!";
           } else {
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(this.email, this.senha)
+              .catch(err => {
+                this.feedback = err.message;
+              });
             this.feedback = "Este nome pode ser utilizado!";
           }
         });
       } else {
-        return (this.feedback = "Gentileza preencher o nome completo!");
+        return (this.feedback = "Gentileza preencher todos os campos!");
       }
     }
   }
@@ -103,9 +111,12 @@ export default {
 }
 
 .error--message {
-  color: #ff5252;
+  color: #fff;
   font-size: 0.7rem;
   text-align: center;
-  margin: -15px 0 0 0;
+  margin: -5px 0 0 0;
+  padding: 5px 10px;
+  background: #ff5252;
+  width: 250px;
 }
 </style>
