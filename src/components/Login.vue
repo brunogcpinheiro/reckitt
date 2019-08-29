@@ -21,6 +21,13 @@
           />
           <v-btn color="#db338f" dark type="submit">Entrar</v-btn>
         </v-form>
+        <p v-if="feedback" class="error--message">{{ feedback }}</p>
+        <loading
+          :active="isLoading"
+          :is-full-page="fullPage"
+          color="#db338f"
+          loader="dots"
+        />
       </div>
       <div class="main--register">
         <p>
@@ -35,17 +42,46 @@
 </template>
 
 <script>
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   name: "Login",
+  components: {
+    Loading
+  },
   data() {
     return {
+      isLoading: false,
+      fullPage: true,
       email: null,
-      password: null
+      password: null,
+      feedback: null
     };
   },
   methods: {
     login() {
-      //console.log(this.email, this.password);
+      this.isLoading = true;
+      if (this.email && this.password) {
+        this.isLoading = true;
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            this.isLoading = false;
+            this.$router.push({ name: "dashboard" });
+          })
+          .catch(err => {
+            this.isLoading = false;
+            this.feedback = err.message;
+          });
+        this.feedback = null;
+      } else {
+        this.isLoading = false;
+        this.feedback = "Please enter the credentials!";
+      }
     }
   }
 };
@@ -75,7 +111,7 @@ export default {
 
 .v-btn {
   width: 100%;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .main--register {
@@ -85,5 +121,17 @@ export default {
       color: #db338f;
     }
   }
+}
+
+.error--message {
+  color: #db338f;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 25px 0 0 0;
+  padding: 5px 10px;
+  background: transparent;
+  border: 2px solid #db338f;
+  width: 250px;
 }
 </style>

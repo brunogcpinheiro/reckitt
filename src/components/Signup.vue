@@ -40,8 +40,7 @@
             :is-full-page="fullPage"
             color="#db338f"
             loader="dots"
-          >
-          </loading>
+          />
           <v-btn color="#db338f" dark @click="signup">Registrar</v-btn>
         </v-form>
       </div>
@@ -76,6 +75,7 @@ export default {
   },
   methods: {
     signup() {
+      this.feedback = null;
       if (this.name && this.email && this.password) {
         this.slug = slugify(this.name, {
           replacement: "-",
@@ -105,13 +105,13 @@ export default {
                   })
                   .then(() => {
                     this.isLoading = false;
+                    this.feedback = null;
                     this.$router.push({ name: "login" });
                   });
               })
               .catch(err => {
                 this.isLoading = false;
                 this.feedback = err.message;
-                this.alert = false;
               });
           }
         });
