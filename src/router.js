@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 import Login from "@/components/Login";
 import Signup from "@/components/Signup.vue";
@@ -29,9 +31,25 @@ const router = new Router({
     {
       path: "/dashboard",
       name: "dashboard",
-      component: Dashboard
+      component: Dashboard,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    let user = firebase.auth().currentUser;
+    if (user) {
+      next();
+    } else {
+      next({ name: "login" });
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
