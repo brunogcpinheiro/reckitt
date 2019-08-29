@@ -32,7 +32,19 @@
             name="password"
             v-model="password"
           />
-          <p :class="alert ? 'success--message' : 'error--message'" v-if="feedback">{{ feedback }}</p>
+          <p
+            :class="alert ? 'success--message' : 'error--message'"
+            v-if="feedback"
+          >
+            {{ feedback }}
+          </p>
+          <loading
+            :active="isLoading"
+            :is-full-page="fullPage"
+            color="#db338f"
+            loader="dots"
+          >
+          </loading>
           <v-btn color="#db338f" dark @click="signup">Registrar</v-btn>
         </v-form>
       </div>
@@ -46,11 +58,18 @@ import db from "@/firebase/init";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import bcrypt from "bcryptjs";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "Signup",
+  components: {
+    Loading
+  },
   data() {
     return {
+      isLoading: false,
+      fullPage: true,
       name: null,
       email: null,
       password: null,
@@ -67,15 +86,18 @@ export default {
           remove: /[$*_+~.()'"!\-:@]/g,
           lower: true
         });
+        this.isLoading = true;
         let ref = db.collection("users").doc(this.slug);
         ref.get().then(doc => {
           if (doc.exists) {
+            this.isLoading = false;
             this.feedback = "This name is already in use!";
           } else {
             firebase
               .auth()
               .createUserWithEmailAndPassword(this.email, this.password)
               .then(cred => {
+                this.isLoading = true;
                 const hash = bcrypt.hashSync(this.password, 3);
                 ref
                   .set({
@@ -86,10 +108,12 @@ export default {
                     user_id: cred.user.uid
                   })
                   .then(() => {
+                    this.isLoading = false;
                     this.$router.push({ name: "login" });
                   });
               })
               .catch(err => {
+                this.isLoading = false;
                 this.feedback = err.message;
                 this.alert = false;
               });
