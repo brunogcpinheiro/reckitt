@@ -169,7 +169,7 @@ export default {
 }
 
 .error--message {
-  color: #fff;
+  color: #ff5252;
   font-size: 0.7rem;
   text-align: center;
   margin: -5px 0 0 0;
