@@ -32,10 +32,7 @@
             name="password"
             v-model="password"
           />
-          <p
-            :class="alert ? 'success--message' : 'error--message'"
-            v-if="feedback"
-          >
+          <p class="error--message" v-if="feedback">
             {{ feedback }}
           </p>
           <loading
@@ -74,8 +71,7 @@ export default {
       email: null,
       password: null,
       feedback: null,
-      slug: null,
-      alert: false
+      slug: null
     };
   },
   methods: {
@@ -169,22 +165,14 @@ export default {
 }
 
 .error--message {
-  color: #ff5252;
-  font-size: 0.7rem;
+  color: #db338f;
+  font-size: 0.8rem;
+  font-weight: bold;
   text-align: center;
   margin: -5px 0 0 0;
   padding: 5px 10px;
-  background: #ff5252;
-  width: 250px;
-}
-
-.success--message {
-  color: #fff;
-  font-size: 0.7rem;
-  text-align: center;
-  margin: -5px 0 0 0;
-  padding: 5px 10px;
-  background: #118f1c;
+  background: transparent;
+  border: 2px solid #db338f;
   width: 250px;
 }
 </style>

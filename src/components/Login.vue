@@ -6,7 +6,7 @@
         <h1>Login</h1>
       </div>
       <div class="main--form">
-        <v-form>
+        <v-form @submit.prevent="login">
           <v-text-field
             type="text"
             placeholder="email"
@@ -14,12 +14,12 @@
             v-model="email"
           />
           <v-text-field
-            type="text"
+            type="password"
             placeholder="senha"
             color="#db338f"
             v-model="password"
           />
-          <v-btn color="#db338f" dark>Entrar</v-btn>
+          <v-btn color="#db338f" dark type="submit">Entrar</v-btn>
         </v-form>
       </div>
       <div class="main--register">
@@ -42,6 +42,11 @@ export default {
       email: null,
       password: null
     };
+  },
+  methods: {
+    login() {
+      //console.log(this.email, this.password);
+    }
   }
 };
 </script>
