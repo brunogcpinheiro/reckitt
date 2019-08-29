@@ -1,26 +1,50 @@
 <template>
   <v-content>
     <div class="main--container">
-      <img src="@/assets/logo.png" alt="" />
+      <img src="@/assets/logo.png" alt />
       <div class="main--title">
         <h1>Login</h1>
       </div>
       <div class="main--form">
         <v-form>
-          <v-text-field type="text" placeholder="usuario" color="#db338f" />
-          <v-text-field type="password" placeholder="senha" color="#db338f" />
+          <v-text-field
+            type="text"
+            placeholder="email"
+            color="#db338f"
+            v-model="email"
+          />
+          <v-text-field
+            type="text"
+            placeholder="senha"
+            color="#db338f"
+            v-model="password"
+          />
           <v-btn color="#db338f" dark>Entrar</v-btn>
         </v-form>
       </div>
       <div class="main--register">
         <p>
           Ainda não é registrado?
-          <span><router-link to="/signup">Clique aqui</router-link></span>
+          <span>
+            <router-link to="/signup">Clique aqui</router-link>
+          </span>
         </p>
       </div>
     </div>
   </v-content>
 </template>
+
+<script>
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: null,
+      password: null
+    };
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .main--container {

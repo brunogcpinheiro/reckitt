@@ -1,7 +1,11 @@
 <template>
   <v-content>
     <div class="main--container">
-      <img src="@/assets/logo.png" alt="" />
+      <div class="icon">
+        <v-icon color="#db338f">mdi-arrow-left-circle</v-icon>
+        <router-link to="/">voltar</router-link>
+      </div>
+      <img src="@/assets/logo.png" alt />
       <div class="main--title">
         <h1>Registrar</h1>
       </div>
@@ -11,8 +15,8 @@
             type="text"
             color="#db338f"
             placeholder="nome completo"
-            name="nome"
-            v-model="nome"
+            name="name"
+            v-model="name"
           />
           <v-text-field
             type="text"
@@ -25,10 +29,10 @@
             type="password"
             color="#db338f"
             placeholder="senha"
-            name="senha"
-            v-model="senha"
+            name="password"
+            v-model="password"
           />
-          <p class="error--message" v-if="feedback">{{ feedback }}</p>
+          <p :class="alert ? 'success--message' : 'error--message'" v-if="feedback">{{ feedback }}</p>
           <v-btn color="#db338f" dark @click="signup">Registrar</v-btn>
         </v-form>
       </div>
@@ -41,22 +45,24 @@ import slugify from "slugify";
 import db from "@/firebase/init";
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import bcrypt from "bcryptjs";
 
 export default {
   name: "Signup",
   data() {
     return {
-      nome: null,
+      name: null,
       email: null,
-      senha: null,
+      password: null,
       feedback: null,
-      slug: null
+      slug: null,
+      alert: false
     };
   },
   methods: {
     signup() {
-      if (this.nome && this.email && this.senha) {
-        this.slug = slugify(this.nome, {
+      if (this.name && this.email && this.password) {
+        this.slug = slugify(this.name, {
           replacement: "-",
           remove: /[$*_+~.()'"!\-:@]/g,
           lower: true
@@ -64,19 +70,33 @@ export default {
         let ref = db.collection("users").doc(this.slug);
         ref.get().then(doc => {
           if (doc.exists) {
-            this.feedback = "Este nome já está sendo utilizado!";
+            this.feedback = "This name is already in use!";
           } else {
             firebase
               .auth()
-              .createUserWithEmailAndPassword(this.email, this.senha)
+              .createUserWithEmailAndPassword(this.email, this.password)
+              .then(cred => {
+                const hash = bcrypt.hashSync(this.password, 3);
+                ref
+                  .set({
+                    name: this.name,
+                    email: this.email,
+                    password: hash,
+                    isAdmin: false,
+                    user_id: cred.user.uid
+                  })
+                  .then(() => {
+                    this.$router.push({ name: "login" });
+                  });
+              })
               .catch(err => {
                 this.feedback = err.message;
+                this.alert = false;
               });
-            this.feedback = "Este nome pode ser utilizado!";
           }
         });
       } else {
-        return (this.feedback = "Gentileza preencher todos os campos!");
+        return (this.feedback = "Please, complete all fields!");
       }
     }
   }
@@ -89,7 +109,21 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-top: 50px;
+  padding-top: 20px;
+  .icon {
+    align-self: flex-start;
+    margin: 0 0 5px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    a {
+      color: #db338f;
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-left: 3px;
+    }
+  }
   img {
     width: 200px;
     height: 120px;
@@ -117,6 +151,16 @@ export default {
   margin: -5px 0 0 0;
   padding: 5px 10px;
   background: #ff5252;
+  width: 250px;
+}
+
+.success--message {
+  color: #fff;
+  font-size: 0.7rem;
+  text-align: center;
+  margin: -5px 0 0 0;
+  padding: 5px 10px;
+  background: #118f1c;
   width: 250px;
 }
 </style>
