@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <div>
-      Bem vindo a Dashboard!
-      <a @click="logout">Deslogar</a>
+  <v-content>
+    <div class="main--container">
+      Bem vindo, {{ user_name }}!
+      <p class="logout" @click="logout">
+        <v-icon color="#db338f">mdi-exit-to-app</v-icon>
+        <span>Sair</span>
+      </p>
     </div>
     <loading
       :active="isLoading"
@@ -10,12 +13,13 @@
       color="#db338f"
       loader="dots"
     />
-  </div>
+  </v-content>
 </template>
 
 <script>
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import db from "@/firebase/init";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 
@@ -27,8 +31,13 @@ export default {
   data() {
     return {
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      user_name: ""
     };
+  },
+  created() {
+    // this.active_user = firebase.auth().currentUser.email;
+    console.log(firebase.auth());
   },
   methods: {
     logout() {
@@ -44,3 +53,19 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.main--container {
+  padding: 20px;
+}
+
+.logout {
+  display: flex;
+  padding: 5px;
+  color: #db338f;
+
+  span {
+    text-decoration: underline;
+  }
+}
+</style>
