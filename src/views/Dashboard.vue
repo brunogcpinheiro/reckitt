@@ -1,11 +1,21 @@
 <template>
   <v-content>
     <div class="main--container">
-      Bem vindo, {{ user_name }}!
       <p class="logout" @click="logout">
         <v-icon color="#db338f">mdi-exit-to-app</v-icon>
         <span>Sair</span>
       </p>
+      <div>
+        <h2>
+          Bem vindo,
+        </h2>
+        <p>{{ user_name }}!</p>
+      </div>
+    </div>
+    <div class="content">
+      <div>
+        <h4>Preencha os dados abaixo</h4>
+      </div>
     </div>
     <loading
       :active="isLoading"
@@ -35,9 +45,17 @@ export default {
       user_name: ""
     };
   },
-  created() {
-    // this.active_user = firebase.auth().currentUser.email;
-    console.log(firebase.auth());
+  mounted() {
+    let user = firebase.auth().currentUser;
+
+    db.collection("users")
+      .where("user_id", "==", user.uid)
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user_name = doc.data().name;
+        });
+      });
   },
   methods: {
     logout() {
@@ -63,9 +81,18 @@ export default {
   display: flex;
   padding: 5px;
   color: #db338f;
+  float: right;
 
   span {
     text-decoration: underline;
+    margin-left: 3px;
+    margin-top: 5px;
   }
+}
+
+.content {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
