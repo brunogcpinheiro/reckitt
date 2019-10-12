@@ -1,22 +1,45 @@
 <template>
   <v-content>
-    <div class="main--container">
-      <p class="logout" @click="logout">
-        <v-icon color="#db338f">mdi-exit-to-app</v-icon>
-        <span>Sair</span>
-      </p>
+    <Header />
+    <v-container class="content">
       <div>
-        <h2>
-          Bem vindo,
-        </h2>
-        <p>{{ user_name }}!</p>
+        <h4>1. Dados Iniciais</h4>
       </div>
-    </div>
-    <div class="content">
-      <div>
-        <h4>Preencha os dados abaixo</h4>
+
+      <div class="form">
+        <v-form>
+          <v-text-field
+            label="Nome"
+            prepend-icon="mdi-account"
+            color="#db338f"
+            v-model="name"
+          ></v-text-field>
+          <v-text-field
+            label="Loja"
+            prepend-icon="mdi-cart"
+            color="#db338f"
+            v-model="store"
+          ></v-text-field>
+          <v-menu full-width>
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                color="#db338f"
+                label="Dia"
+                prepend-icon="mdi-calendar"
+                v-on="on"
+                :value="date"
+              >
+              </v-text-field>
+            </template>
+            <v-date-picker
+              v-model="date"
+              color="#db338f"
+              full-width
+            ></v-date-picker>
+          </v-menu>
+        </v-form>
       </div>
-    </div>
+    </v-container>
     <loading
       :active="isLoading"
       :is-full-page="fullPage"
@@ -27,71 +50,32 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import db from "@/firebase/init";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+
+import Header from "@/components/Header.vue";
 
 export default {
   name: "Dashboard",
   components: {
-    Loading
+    Loading,
+    Header
   },
   data() {
     return {
       isLoading: false,
       fullPage: true,
-      user_name: ""
+      name: "",
+      store: "",
+      date: null
     };
-  },
-  mounted() {
-    let user = firebase.auth().currentUser;
-
-    db.collection("users")
-      .where("user_id", "==", user.uid)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          this.user_name = doc.data().name;
-        });
-      });
-  },
-  methods: {
-    logout() {
-      this.isLoading = true;
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.isLoading = false;
-          this.$router.push({ name: "login" });
-        });
-    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.main--container {
-  padding: 20px;
-}
-
-.logout {
-  display: flex;
-  padding: 5px;
-  color: #db338f;
-  float: right;
-
-  span {
-    text-decoration: underline;
-    margin-left: 3px;
-    margin-top: 5px;
-  }
-}
-
 .content {
-  padding: 0 20px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
 }
