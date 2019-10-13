@@ -27,12 +27,12 @@
                 label="Dia"
                 prepend-icon="mdi-calendar"
                 v-on="on"
-                :value="date"
+                :value="formattedDate"
               >
               </v-text-field>
             </template>
             <v-date-picker
-              v-model="date"
+              v-model="due"
               color="#db338f"
               full-width
             ></v-date-picker>
@@ -52,6 +52,9 @@
 <script>
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import format from "date-fns/format";
+import { parseISO } from "date-fns/fp";
+import ptBR from "date-fns/locale/pt-BR";
 
 import Header from "@/components/Header.vue";
 
@@ -67,8 +70,14 @@ export default {
       fullPage: true,
       name: "",
       store: "",
-      date: null
+      due: null
     };
+  },
+  computed: {
+    formattedDate() {
+      let parsedDate = parseISO(this.due);
+      return this.due ? format(parsedDate, "dd/MM/yyyy", { locale: ptBR }) : "";
+    }
   }
 };
 </script>
@@ -76,6 +85,7 @@ export default {
 <style lang="scss" scoped>
 .content {
   padding: 10px 20px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
 }

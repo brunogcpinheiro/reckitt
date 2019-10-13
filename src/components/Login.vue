@@ -9,13 +9,13 @@
         <v-form @submit.prevent="login">
           <v-text-field
             type="text"
-            placeholder="email"
+            label="email"
             color="#db338f"
             v-model="email"
           />
           <v-text-field
             type="password"
-            placeholder="senha"
+            label="senha"
             color="#db338f"
             v-model="password"
           />

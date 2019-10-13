@@ -14,21 +14,21 @@
           <v-text-field
             type="text"
             color="#db338f"
-            placeholder="nome completo"
+            label="nome completo"
             name="name"
             v-model="name"
           />
           <v-text-field
             type="text"
             color="#db338f"
-            placeholder="email"
+            label="email"
             name="email"
             v-model="email"
           />
           <v-text-field
             type="password"
             color="#db338f"
-            placeholder="senha"
+            label="senha"
             name="password"
             v-model="password"
           />
