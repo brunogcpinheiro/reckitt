@@ -71,7 +71,7 @@ export default {
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
             this.isLoading = false;
-            this.$router.push({ name: "dashboard" });
+            this.$router.push({ name: "initial" });
           })
           .catch(err => {
             this.isLoading = false;

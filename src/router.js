@@ -6,7 +6,8 @@ import "firebase/auth";
 import Login from "@/components/Login";
 import Signup from "@/components/Signup.vue";
 
-import Dashboard from "@/views/Dashboard.vue";
+import Initial from "@/views/Initial.vue";
+import Store from "@/views/Store.vue";
 
 Vue.use(Router);
 
@@ -29,9 +30,17 @@ const router = new Router({
       //component: () => import("./components/Signup.vue")
     },
     {
-      path: "/dashboard",
-      name: "dashboard",
-      component: Dashboard,
+      path: "/initial",
+      name: "initial",
+      component: Initial,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/store",
+      name: "store",
+      component: Store,
       meta: {
         requiresAuth: true
       }

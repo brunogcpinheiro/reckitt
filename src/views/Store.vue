@@ -7,18 +7,16 @@
       </div>
 
       <div class="form">
-        <v-form v-on:submit.prevent="onSubmit">
+        <v-form @submit.prevent="onSubmit">
           <v-text-field
             label="Nome"
             prepend-icon="mdi-account"
             color="#db338f"
-            v-model="name"
           ></v-text-field>
           <v-text-field
             label="Loja"
             prepend-icon="mdi-cart"
             color="#db338f"
-            v-model="store"
           ></v-text-field>
           <v-menu full-width>
             <template v-slot:activator="{ on }">
@@ -31,11 +29,7 @@
               >
               </v-text-field>
             </template>
-            <v-date-picker
-              v-model="due"
-              color="#db338f"
-              full-width
-            ></v-date-picker>
+            <v-date-picker color="#db338f" full-width></v-date-picker>
           </v-menu>
 
           <v-btn color="#db338f" dark type="submit" width="100%" height="60"
@@ -45,13 +39,15 @@
       </div>
 
       <div class="stepper">
-        <v-stepper class="stepper-content" alt-labels vertical>
+        <v-stepper value="2" class="stepper-content" alt-labels vertical>
           <v-stepper-header>
-            <v-stepper-step color="#db338f" step="1">Iniciais</v-stepper-step>
+            <v-stepper-step color="#db338f" step="1" complete
+              >Iniciais</v-stepper-step
+            >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="2">Loja</v-stepper-step>
+            <v-stepper-step color="#db338f" step="2">Loja</v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -87,21 +83,13 @@ export default {
   data() {
     return {
       isLoading: false,
-      fullPage: true,
-      name: "",
-      store: "",
-      due: null
+      fullPage: true
     };
   },
   methods: {
-    async onSubmit() {
-      await this.$store.dispatch("saveInitialData", {
-        name: this.name,
-        store: this.store,
-        due: this.due
-      });
+    onSubmit() {
       // eslint-disable-next-line
-      console.log(this.$store.state.initialData);
+      console.log(this.$store.state);
     }
   },
   computed: {
