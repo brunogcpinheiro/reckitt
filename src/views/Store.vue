@@ -3,38 +3,40 @@
     <Header />
     <v-container class="content">
       <div>
-        <h4>1. Dados Iniciais</h4>
+        <h4>2. Dados da Loja</h4>
+      </div>
+
+      <div>
+        <p>
+          <small>Nome da loja.: </small>
+          {{ initialData.store }}
+        </p>
       </div>
 
       <div class="form">
-        <v-form @submit.prevent="onSubmit">
-          <v-text-field
-            label="Nome"
-            prepend-icon="mdi-account"
-            color="#db338f"
-          ></v-text-field>
-          <v-text-field
-            label="Loja"
-            prepend-icon="mdi-cart"
-            color="#db338f"
-          ></v-text-field>
-          <v-menu full-width>
-            <template v-slot:activator="{ on }">
-              <v-text-field
+        <v-form>
+          <v-card>
+            <v-card-title class="card--title">
+              <p>MSL <small>(osa)</small></p>
+            </v-card-title>
+            <v-card-text>
+              <v-checkbox
                 color="#db338f"
-                label="Data"
-                prepend-icon="mdi-calendar"
-                v-on="on"
-                :value="formattedDate"
-              >
-              </v-text-field>
-            </template>
-            <v-date-picker color="#db338f" full-width></v-date-picker>
-          </v-menu>
-
-          <v-btn color="#db338f" dark type="submit" width="100%" height="60"
-            >Salvar e Avançar <v-icon>mdi-content-save-move</v-icon></v-btn
-          >
+                label="0-64% (0pts)"
+                :value="msl.first"
+              ></v-checkbox>
+              <v-checkbox
+                color="#db338f"
+                label=">65% (proporcional a 40pts)"
+                :value="msl.second"
+              ></v-checkbox>
+              <v-checkbox
+                color="#db338f"
+                label="=100% (40pts)"
+                :value="msl.third"
+              ></v-checkbox>
+            </v-card-text>
+          </v-card>
         </v-form>
       </div>
 
@@ -68,14 +70,11 @@
 <script>
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import format from "date-fns/format";
-import { parseISO } from "date-fns/fp";
-import ptBR from "date-fns/locale/pt-BR";
 
 import Header from "@/components/Header.vue";
 
 export default {
-  name: "Dashboard",
+  name: "Store",
   components: {
     Loading,
     Header
@@ -83,19 +82,17 @@ export default {
   data() {
     return {
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      msl: {
+        first: 0,
+        second: 0,
+        third: 0
+      }
     };
   },
-  methods: {
-    onSubmit() {
-      // eslint-disable-next-line
-      console.log(this.$store.state);
-    }
-  },
   computed: {
-    formattedDate() {
-      let parsedDate = parseISO(this.due);
-      return this.due ? format(parsedDate, "dd/MM/yyyy", { locale: ptBR }) : "";
+    initialData() {
+      return this.$store.state.initialData;
     }
   }
 };
@@ -110,6 +107,22 @@ export default {
 
   @media (min-width: 980px) {
     max-width: 500px;
+  }
+}
+
+.card--title {
+  background: #db338f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+
+  p {
+    padding: 0;
+    margin: 0;
+    small {
+      font-size: 0.8rem;
+    }
   }
 }
 

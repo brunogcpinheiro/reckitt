@@ -81,7 +81,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import Header from "@/components/Header.vue";
 
 export default {
-  name: "Dashboard",
+  name: "Initial",
   components: {
     Loading,
     Header
