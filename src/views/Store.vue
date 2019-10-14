@@ -20,21 +20,45 @@
               <p>MSL <small>(osa)</small></p>
             </v-card-title>
             <v-card-text>
-              <v-checkbox
-                color="#db338f"
-                label="0-64% (0pts)"
-                :value="msl.first"
-              ></v-checkbox>
-              <v-checkbox
-                color="#db338f"
-                label=">65% (proporcional a 40pts)"
-                :value="msl.second"
-              ></v-checkbox>
-              <v-checkbox
-                color="#db338f"
-                label="=100% (40pts)"
-                :value="msl.third"
-              ></v-checkbox>
+              <v-radio-group v-model="msl" :mandatory="false">
+                <v-radio
+                  color="#db338f"
+                  label="0 - 64% (0 pts)"
+                  value="0"
+                ></v-radio>
+
+                <div class="proportional">
+                  <v-radio
+                    class="proportional--radio"
+                    color="#db338f"
+                    label=">= 65% (proporcional a 40 pts)"
+                    :value="proportionalResult"
+                  ></v-radio>
+
+                  <v-text-field
+                    type="number"
+                    outlined
+                    class="proportional--input"
+                    v-model="proportional"
+                  ></v-text-field>
+                </div>
+                <v-radio
+                  color="#db338f"
+                  label="= 100% (40 pts)"
+                  value="40"
+                ></v-radio>
+              </v-radio-group>
+              <div class="result">
+                <div class="result--info">
+                  <h3>
+                    Total:
+                  </h3>
+                  <small>Máximo: 40 pts</small>
+                </div>
+                <div class="points">
+                  <span>{{ msl || 0 }}</span>
+                </div>
+              </div>
             </v-card-text>
           </v-card>
         </v-form>
@@ -83,16 +107,17 @@ export default {
     return {
       isLoading: false,
       fullPage: true,
-      msl: {
-        first: 0,
-        second: 0,
-        third: 0
-      }
+      msl: 0,
+      proportional: 70,
+      checked: false
     };
   },
   computed: {
     initialData() {
       return this.$store.state.initialData;
+    },
+    proportionalResult() {
+      return Math.floor((parseInt(this.proportional) / 100) * 40);
     }
   }
 };
@@ -123,6 +148,52 @@ export default {
     small {
       font-size: 0.8rem;
     }
+  }
+}
+
+.proportional {
+  display: flex;
+}
+
+.proportional--radio {
+  flex: 4;
+}
+
+.proportional--input {
+  flex: 1;
+}
+
+.result {
+  float: right;
+  margin-top: -30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h3 {
+    align-self: flex-end;
+  }
+}
+
+.result--info {
+  display: flex;
+  flex-direction: column;
+}
+
+.points {
+  background: #db338f;
+  color: #fff;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  margin: -10px 0 0 10px;
+
+  span {
+    font-size: 1.5rem;
   }
 }
 

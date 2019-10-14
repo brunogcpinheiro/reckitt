@@ -13,14 +13,12 @@
         <v-form>
           <v-text-field
             type="text"
-            color="#db338f"
             label="nome completo"
             name="name"
             v-model="name"
           />
           <v-text-field
             type="text"
-            color="#db338f"
             label="email"
             name="email"
             v-model="email"

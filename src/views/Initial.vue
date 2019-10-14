@@ -11,19 +11,16 @@
           <v-text-field
             label="Nome"
             prepend-icon="mdi-account"
-            color="#db338f"
             v-model="name"
           ></v-text-field>
           <v-text-field
             label="Loja"
             prepend-icon="mdi-cart"
-            color="#db338f"
             v-model="store"
           ></v-text-field>
           <v-menu full-width>
             <template v-slot:activator="{ on }">
               <v-text-field
-                color="#db338f"
                 label="Data"
                 prepend-icon="mdi-calendar"
                 v-on="on"
@@ -32,13 +29,13 @@
               </v-text-field>
             </template>
             <v-date-picker
-              v-model="due"
               color="#db338f"
+              v-model="due"
               full-width
             ></v-date-picker>
           </v-menu>
 
-          <v-btn color="#db338f" dark type="submit" width="100%" height="60"
+          <v-btn dark color="#db338f" type="submit" width="100%" height="60"
             >Salvar e Avançar <v-icon>mdi-content-save-move</v-icon></v-btn
           >
         </v-form>
@@ -47,7 +44,7 @@
       <div class="stepper">
         <v-stepper value="1" class="stepper-content" alt-labels vertical>
           <v-stepper-header>
-            <v-stepper-step color="#db338f" step="1">Iniciais</v-stepper-step>
+            <v-stepper-step step="1">Iniciais</v-stepper-step>
 
             <v-divider></v-divider>
 

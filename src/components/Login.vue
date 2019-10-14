@@ -7,18 +7,8 @@
       </div>
       <div class="main--form">
         <v-form @submit.prevent="login">
-          <v-text-field
-            type="text"
-            label="email"
-            color="#db338f"
-            v-model="email"
-          />
-          <v-text-field
-            type="password"
-            label="senha"
-            color="#db338f"
-            v-model="password"
-          />
+          <v-text-field type="text" label="email" v-model="email" />
+          <v-text-field type="password" label="senha" v-model="password" />
           <v-btn color="#db338f" dark type="submit">Entrar</v-btn>
         </v-form>
         <p v-if="feedback" class="error--message">{{ feedback }}</p>
