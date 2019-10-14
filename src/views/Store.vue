@@ -20,6 +20,10 @@
               <p>MSL <small>(osa)</small></p>
             </v-card-title>
             <v-card-text>
+              <small
+                >Por favor, se o resultado se enquadrar na segunda opção,
+                primeiro coloque a porcentagem e depois selcione a opção!</small
+              >
               <v-radio-group v-model="msl" :mandatory="false">
                 <v-radio
                   color="#db338f"
