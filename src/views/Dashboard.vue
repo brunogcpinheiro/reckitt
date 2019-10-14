@@ -7,7 +7,7 @@
       </div>
 
       <div class="form">
-        <v-form>
+        <v-form v-on:submit.prevent="onSubmit">
           <v-text-field
             label="Nome"
             prepend-icon="mdi-account"
@@ -24,7 +24,7 @@
             <template v-slot:activator="{ on }">
               <v-text-field
                 color="#db338f"
-                label="Dia"
+                label="Data"
                 prepend-icon="mdi-calendar"
                 v-on="on"
                 :value="formattedDate"
@@ -38,14 +38,14 @@
             ></v-date-picker>
           </v-menu>
 
-          <v-btn color="#db338f" dark type="submit" width="100%" height="50"
+          <v-btn color="#db338f" dark type="submit" width="100%" height="60"
             >Salvar e Avançar <v-icon>mdi-content-save-move</v-icon></v-btn
           >
         </v-form>
       </div>
 
       <div class="stepper">
-        <v-stepper alt-labels light vertical>
+        <v-stepper class="stepper-content" alt-labels vertical>
           <v-stepper-header>
             <v-stepper-step color="#db338f" step="1">Iniciais</v-stepper-step>
 
@@ -93,6 +93,17 @@ export default {
       due: null
     };
   },
+  methods: {
+    async onSubmit() {
+      await this.$store.dispatch("saveInitialData", {
+        name: this.name,
+        store: this.store,
+        due: this.due
+      });
+      // eslint-disable-next-line
+      console.log(this.$store.state.initialData);
+    }
+  },
   computed: {
     formattedDate() {
       let parsedDate = parseISO(this.due);
@@ -117,10 +128,15 @@ export default {
 .v-btn {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .stepper {
   margin-top: 30px;
+}
+
+.stepper-content {
+  background: #e5e5e5;
+  padding: 0;
 }
 </style>
