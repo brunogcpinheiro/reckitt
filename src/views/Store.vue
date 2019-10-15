@@ -21,8 +21,11 @@
             </v-card-title>
             <v-card-text>
               <small
-                >Por favor, se o resultado se enquadrar na segunda opção,
-                primeiro coloque a porcentagem e depois selcione a opção!</small
+                ><strong
+                  >Para habilitar a segunda opção, por favor insira a
+                  porcentagem no campo a frente e marque a opção para o
+                  cálculo</strong
+                ></small
               >
               <v-radio-group v-model="msl" :mandatory="false">
                 <v-radio
@@ -112,7 +115,7 @@ export default {
       isLoading: false,
       fullPage: true,
       msl: 0,
-      proportional: 70,
+      proportional: null,
       checked: false
     };
   },
