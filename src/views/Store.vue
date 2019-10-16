@@ -15,7 +15,7 @@
 
       <div class="form">
         <v-form>
-          <v-card>
+          <v-card class="card">
             <v-card-title class="card--title">
               <p>MSL <small>(osa)</small></p>
             </v-card-title>
@@ -27,7 +27,7 @@
                   cálculo</strong
                 ></small
               >
-              <v-radio-group v-model="msl" :mandatory="false">
+              <v-radio-group hide-details v-model="msl" :mandatory="false">
                 <v-radio
                   color="#db338f"
                   label="0 - 64% (0 pts)"
@@ -64,6 +64,34 @@
                 </div>
                 <div class="points">
                   <span>{{ msl || 0 }}</span>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+
+          <v-card>
+            <v-card-title class="card--title">
+              <p>SOS</p>
+            </v-card-title>
+            <v-card-text>
+              <v-checkbox
+                v-for="cb in sosCbs"
+                color="primary"
+                :value="cb"
+                :label="cb.label"
+                :key="cb.id"
+                v-model="sosCheckeds"
+                hide-details
+              ></v-checkbox>
+              <div class="result">
+                <div class="result--info">
+                  <h3>
+                    Total:
+                  </h3>
+                  <small>Máximo: 20 pts</small>
+                </div>
+                <div class="points">
+                  <span>{{ sosSum || 0 }}</span>
                 </div>
               </div>
             </v-card-text>
@@ -115,8 +143,55 @@ export default {
       isLoading: false,
       fullPage: true,
       msl: 0,
-      proportional: null,
-      checked: false
+      sosCbs: [
+        {
+          id: 1,
+          value: 5,
+          label: "VMU 75% (5 pts)"
+        },
+        {
+          id: 2,
+          value: 1,
+          label: "Cozinha 45% (1 pts)"
+        },
+        {
+          id: 3,
+          value: 1,
+          label: "Banheiro 55% (1 pt)"
+        },
+        {
+          id: 4,
+          value: 1,
+          label: "VLP 60% (1 pt)"
+        },
+        {
+          id: 5,
+          value: 1,
+          label: "VPS 40% (1 pt)"
+        },
+        {
+          id: 6,
+          value: 1,
+          label: "Desinfetantes 20% (1 pt)"
+        },
+        {
+          id: 7,
+          value: 5,
+          label: "Vanish 70% (5 pts)"
+        },
+        {
+          id: 8,
+          value: 4,
+          label: "Pest 20% (4 pts)"
+        },
+        {
+          id: 9,
+          value: 1,
+          label: "Bom Ar 45% (1 pt)"
+        }
+      ],
+      sosCheckeds: [],
+      proportional: null
     };
   },
   computed: {
@@ -125,6 +200,9 @@ export default {
     },
     proportionalResult() {
       return Math.floor((parseInt(this.proportional) / 100) * 40);
+    },
+    sosSum() {
+      return this.sosCheckeds.reduce((sum, addon) => sum + addon.value, 0);
     }
   }
 };
@@ -140,6 +218,10 @@ export default {
   @media (min-width: 980px) {
     max-width: 500px;
   }
+}
+
+.card {
+  margin-bottom: 50px;
 }
 
 .card--title {
@@ -172,7 +254,7 @@ export default {
 
 .result {
   float: right;
-  margin-top: -30px;
+  margin-top: -40px;
   display: flex;
   align-items: center;
   justify-content: center;
