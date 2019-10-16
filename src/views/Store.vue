@@ -168,6 +168,10 @@
               </div>
             </v-card-text>
           </v-card>
+
+          <v-btn class="total" width="100%" height="60" color="primary"
+            >Total: <span>{{ totalSum }}</span></v-btn
+          >
         </v-form>
       </div>
 
@@ -339,6 +343,14 @@ export default {
     },
     kdbSum() {
       return this.kdbCheckeds.reduce((sum, addon) => sum + addon.value, 0);
+    },
+    totalSum() {
+      return (
+        parseInt(this.msl) +
+        parseInt(this.sosSum) +
+        parseInt(this.canvass) +
+        parseInt(this.kdbSum)
+      );
     }
   }
 };
@@ -430,10 +442,16 @@ export default {
   margin-top: 15px;
 }
 
-.v-btn {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 15px;
+.total {
+  font-size: 1.2rem;
+  font-family: "Montserrat", cursive, sans-serif;
+  font-weight: bold;
+  border: 5px solid #f598cb;
+
+  span {
+    font-size: 2rem;
+    margin-left: 10px;
+  }
 }
 
 .stepper {
