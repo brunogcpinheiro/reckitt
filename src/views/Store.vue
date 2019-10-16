@@ -69,7 +69,7 @@
             </v-card-text>
           </v-card>
 
-          <v-card>
+          <v-card class="card">
             <v-card-title class="card--title">
               <p>SOS</p>
             </v-card-title>
@@ -92,6 +92,50 @@
                 </div>
                 <div class="points">
                   <span>{{ sosSum || 0 }}</span>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+
+          <v-card class="card">
+            <v-card-title class="card--title">
+              <p>CANVASS</p>
+            </v-card-title>
+            <v-card-text>
+              <v-radio-group hide-details v-model="canvass" :mandatory="false">
+                <v-radio
+                  color="#db338f"
+                  label="1 MARCA (5 pts)"
+                  value="5"
+                ></v-radio>
+
+                <div>
+                  <v-radio
+                    color="#db338f"
+                    label="2 MARCAS (10 pts)"
+                    value="10"
+                  ></v-radio>
+                </div>
+
+                <v-radio
+                  color="#db338f"
+                  label="+3 MARCAS (15 pts)"
+                  value="15"
+                ></v-radio>
+              </v-radio-group>
+              <div class="extra">
+                <h3>Target de ponto extra:</h3>
+                <p>Ilha, Terminal ou Display</p>
+              </div>
+              <div class="result">
+                <div class="result--info">
+                  <h3>
+                    Total:
+                  </h3>
+                  <small>Máximo: 15 pts</small>
+                </div>
+                <div class="points">
+                  <span>{{ canvass || 0 }}</span>
                 </div>
               </div>
             </v-card-text>
@@ -191,6 +235,7 @@ export default {
         }
       ],
       sosCheckeds: [],
+      canvass: 0,
       proportional: null
     };
   },
@@ -253,11 +298,12 @@ export default {
 }
 
 .result {
-  float: right;
-  margin-top: -40px;
+  width: 100%;
+  height: 100%;
+  margin-top: 30px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 
   h3 {
     align-self: flex-end;
@@ -280,10 +326,16 @@ export default {
   justify-content: center;
   float: right;
   margin: -10px 0 0 10px;
+  border: 3px solid #f598cb;
 
   span {
     font-size: 1.5rem;
   }
+}
+
+.v-radio,
+.extra {
+  margin-top: 15px;
 }
 
 .v-btn {
