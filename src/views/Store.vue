@@ -14,7 +14,7 @@
       </div>
 
       <div class="form">
-        <v-form>
+        <v-form @submit.prevent="onSubmit">
           <v-card class="card">
             <v-card-title class="card--title">
               <p>MSL <small>(osa)</small></p>
@@ -171,6 +171,14 @@
 
           <v-btn class="total" width="100%" height="60" color="primary"
             >Total: <span>{{ totalSum }}</span></v-btn
+          >
+          <v-btn
+            type="submit"
+            class="total"
+            width="100%"
+            height="60"
+            color="primary"
+            >Avançar</v-btn
           >
         </v-form>
       </div>
@@ -330,6 +338,20 @@ export default {
       kdbCheckeds: [],
       proportional: null
     };
+  },
+  methods: {
+    async onSubmit() {
+      await this.$store.dispatch("saveStoreData", {
+        msl: this.msl
+      });
+
+      //eslint-disable-next-line
+      console.log(this.$store.state.storeData);
+
+      this.isLoading = true;
+
+      return this.$router.push({ name: "Initial" });
+    }
   },
   computed: {
     initialData() {
