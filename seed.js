@@ -1,7 +1,6 @@
 const firebase = require("firebase");
 // Required for side-effects
 require("firebase/firestore");
-
 // Initialize Cloud Firestore through Firebase
 firebase.initializeApp({
   apiKey: "AIzaSyDyfr8-dmHZoGR7ehAcbOzj6wBC1hCNq0E",

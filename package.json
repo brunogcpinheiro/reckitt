@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "seed": "node ./src/firebase/seed.js"
+    "seed": "node ./seed.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
