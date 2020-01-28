@@ -7,7 +7,7 @@
     <div>
       <p>
         <small>Nome da loja.:</small>
-        {{ initialData.store }}
+        {{ initialData.store.name }}
       </p>
     </div>
 

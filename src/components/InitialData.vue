@@ -11,26 +11,13 @@
           prepend-icon="mdi-account"
           v-model="name"
         ></v-text-field>
+
         <v-text-field
-          label="Loja"
-          prepend-icon="mdi-cart"
-          v-model="store"
+          label="Data de conferência"
+          prepend-icon="mdi-calendar"
+          v-model="due"
+          disabled
         ></v-text-field>
-        <v-menu full-width>
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              label="Data"
-              prepend-icon="mdi-calendar"
-              v-on="on"
-              :value="formattedDate"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            color="#db338f"
-            v-model="due"
-            full-width
-          ></v-date-picker>
-        </v-menu>
 
         <v-btn dark color="#db338f" type="submit" width="100%" height="60">
           Salvar e Avançar
@@ -69,8 +56,8 @@ export default {
   data() {
     return {
       name: "",
-      store: "",
-      due: null
+      store: {},
+      due: format(new Date(), "dd/MM/yyyy", { locale: ptBR })
     };
   },
   methods: {
