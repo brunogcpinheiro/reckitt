@@ -18,13 +18,13 @@ var db = firebase.firestore();
 const stores = [
   {
     id: "HShas2as",
-    bandeira: "Walmart",
-    regiao: "sul"
+    flag: "Walmart",
+    region: "sul"
   },
   {
     id: "78as7ys",
-    bandeira: "Carrefour",
-    regiao: "norte"
+    flag: "Carrefour",
+    region: "norte"
   }
 ];
 
@@ -34,8 +34,8 @@ function seedData(col) {
     ref
       .set({
         id: obj.id,
-        bandeira: obj.bandeira,
-        regiao: obj.regiao
+        flag: obj.bandeira,
+        region: obj.region
       })
       .then(function() {
         console.log("Document written with ID: ", obj.id);
