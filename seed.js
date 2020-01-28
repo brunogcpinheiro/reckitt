@@ -1,7 +1,6 @@
 const firebase = require("firebase");
-// Required for side-effects
 require("firebase/firestore");
-// Initialize Cloud Firestore through Firebase
+
 firebase.initializeApp({
   apiKey: "AIzaSyDyfr8-dmHZoGR7ehAcbOzj6wBC1hCNq0E",
   authDomain: "reckitt-formulario.firebaseapp.com",
@@ -33,7 +32,7 @@ function seedData(col) {
     ref
       .set({
         id: obj.id,
-        flag: obj.bandeira,
+        flag: obj.flag,
         region: obj.region
       })
       .then(function() {
