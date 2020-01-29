@@ -11,29 +11,16 @@ firebase.initializeApp({
   appId: "1:280111051036:web:2da2f5711d1c2637"
 });
 
-var db = firebase.firestore();
-
-const stores = [
-  {
-    id: "HShas2as",
-    flag: "Walmart",
-    region: "sul"
-  },
-  {
-    id: "78as7ys",
-    flag: "Carrefour",
-    region: "norte"
-  }
-];
+const db = firebase.firestore();
 
 function seedData(col) {
   col.forEach(function(obj) {
-    let ref = db.collection("stores").doc(obj.id);
+    let ref = db.collection("sos").doc(obj.id);
     ref
       .set({
         id: obj.id,
-        flag: obj.flag,
-        region: obj.region
+        value: obj.value,
+        label: obj.label
       })
       .then(function() {
         console.log("Document written with ID: ", obj.id);
@@ -44,4 +31,4 @@ function seedData(col) {
   });
 }
 
-seedData(stores);
+seedData();
