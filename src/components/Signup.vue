@@ -30,9 +30,7 @@
             name="password"
             v-model="password"
           />
-          <p class="error--message" v-if="feedback">
-            {{ feedback }}
-          </p>
+          <p class="error--message" v-if="feedback">{{ feedback }}</p>
           <loading
             :active="isLoading"
             :is-full-page="fullPage"
@@ -48,9 +46,7 @@
 
 <script>
 import slugify from "slugify";
-import db from "@/firebase/init";
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { firebaseStore, firebaseAuth } from "@/firebase/init";
 import bcrypt from "bcryptjs";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -81,14 +77,13 @@ export default {
           lower: true
         });
         this.isLoading = true;
-        let ref = db.collection("users").doc(this.slug);
+        let ref = firebaseStore.collection("users").doc(this.slug);
         ref.get().then(doc => {
           if (doc.exists) {
             this.isLoading = false;
             this.feedback = "This name is already in use!";
           } else {
-            firebase
-              .auth()
+            firebaseAuth
               .createUserWithEmailAndPassword(this.email, this.password)
               .then(cred => {
                 this.isLoading = true;

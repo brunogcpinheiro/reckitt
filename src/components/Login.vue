@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { firebaseAuth } from "@/firebase/init";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 
@@ -56,8 +55,7 @@ export default {
       this.isLoading = true;
       if (this.email && this.password) {
         this.isLoading = true;
-        firebase
-          .auth()
+        firebaseAuth
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
             this.isLoading = false;

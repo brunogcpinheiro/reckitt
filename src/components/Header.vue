@@ -6,9 +6,7 @@
     </p>
     <div>
       <div class="greet">
-        <h3>
-          Bem vindo,
-        </h3>
+        <h3>Bem vindo,</h3>
         <p>{{ user_name }}!</p>
       </div>
     </div>
@@ -16,9 +14,7 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import db from "@/firebase/init";
+import { firebaseStore, firebaseAuth } from "@/firebase/init";
 
 export default {
   name: "Header",
@@ -28,9 +24,10 @@ export default {
     };
   },
   created() {
-    let user = firebase.auth().currentUser;
+    let user = firebaseAuth.currentUser;
 
-    db.collection("users")
+    firebaseStore
+      .collection("users")
       .where("user_id", "==", user.uid)
       .get()
       .then(snapshot => {
@@ -42,13 +39,10 @@ export default {
   methods: {
     logout() {
       this.isLoading = true;
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.isLoading = false;
-          this.$router.push({ name: "login" });
-        });
+      firebaseAuth.signOut().then(() => {
+        this.isLoading = false;
+        this.$router.push({ name: "login" });
+      });
     }
   }
 };

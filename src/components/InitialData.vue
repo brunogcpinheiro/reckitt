@@ -45,8 +45,7 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { firebaseAuth } from "@/firebase/init";
 import format from "date-fns/format";
 import { parseISO } from "date-fns/fp";
 import ptBR from "date-fns/locale/pt-BR";
@@ -66,7 +65,7 @@ export default {
         name: this.name,
         store: this.store,
         due: this.due,
-        user: firebase.auth().currentUser.email
+        user: firebaseAuth.currentUser.email
       });
 
       //eslint-disable-next-line
