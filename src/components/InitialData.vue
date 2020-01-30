@@ -69,7 +69,7 @@ export default {
       });
 
       //eslint-disable-next-line
-      console.log(this.$store.state.initialData);
+      console.log(this.$store.state.initialData.items);
 
       this.isLoading = true;
 

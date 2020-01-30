@@ -7,7 +7,7 @@
     <div>
       <p>
         <small>Nome da loja.:</small>
-        {{ initialData.store.name }}
+        {{ initialData.items.store.name }}
       </p>
     </div>
 
@@ -202,114 +202,8 @@ export default {
   data() {
     return {
       msl: 0,
-      sosCbs: [
-        {
-          id: 1,
-          value: 5,
-          label: "VMU 75% (5 pts)"
-        },
-        {
-          id: 2,
-          value: 1,
-          label: "Cozinha 45% (1 pt)"
-        },
-        {
-          id: 3,
-          value: 1,
-          label: "Banheiro 55% (1 pt)"
-        },
-        {
-          id: 4,
-          value: 1,
-          label: "VLP 60% (1 pt)"
-        },
-        {
-          id: 5,
-          value: 1,
-          label: "VPS 40% (1 pt)"
-        },
-        {
-          id: 6,
-          value: 1,
-          label: "Desinfetantes 20% (1 pt)"
-        },
-        {
-          id: 7,
-          value: 5,
-          label: "Vanish 70% (5 pts)"
-        },
-        {
-          id: 8,
-          value: 4,
-          label: "Pest 20% (4 pts)"
-        },
-        {
-          id: 9,
-          value: 1,
-          label: "Bom Ar 45% (1 pt)"
-        }
-      ],
       sosCheckeds: [],
       canvass: 0,
-      kdbCbs: [
-        {
-          id: 1,
-          value: 3,
-          label:
-            "Categ. Alvejante seguro ao lado de amaciante concentrado (3 pts)"
-        },
-        {
-          id: 2,
-          value: 2,
-          label: "Cross de Alvejante seguro em sabão (2 pts)"
-        },
-        {
-          id: 3,
-          value: 3,
-          label: "Categ. de cozinha ao lado de Detergentes (3 pt)"
-        },
-        {
-          id: 4,
-          value: 3,
-          label: "Categ. de banheiro ao lado de água sanitária (3 pts)"
-        },
-        {
-          id: 5,
-          value: 3,
-          label: "30% do categoria de VMU para Power Fusion (3 pts)"
-        },
-        {
-          id: 6,
-          value: 2,
-          label:
-            "50% da categoria de Sanitário para Bloco Premium + Caixa Acoplada + Gel (2 pts)"
-        },
-        {
-          id: 7,
-          value: 2,
-          label: "Cross de Fresh Power 6 em papel higiênico (2 pts)"
-        },
-        {
-          id: 8,
-          value: 1,
-          label: "Categ. Purificadores ao lado de Perfumados (1 pt)"
-        },
-        {
-          id: 9,
-          value: 2,
-          label: "Cross de clickspray em papel higiênico (2 pts)"
-        },
-        {
-          id: 10,
-          value: 2,
-          label: "Categ. Pest com os passos 1, 2 e 3 (2 pts)"
-        },
-        {
-          id: 11,
-          value: 2,
-          label: "Cross de Repelentes em hogiênie infantil (2 pts)"
-        }
-      ],
       kdbCheckeds: [],
       proportional: null
     };
