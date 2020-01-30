@@ -11,12 +11,6 @@ export default {
     }
   },
 
-  getters: {
-    allSOS(state) {
-      return state.items;
-    }
-  },
-
   actions: {
     async fetchSOS(context) {
       await firebaseStore
@@ -24,7 +18,8 @@ export default {
         .get()
         .then(querySnapshot => {
           const sos = querySnapshot.docs.map(doc => doc.data());
-          context.commit("fetch", sos);
+          console.log(sos);
+          context.commit("fetchSOS", sos);
         });
     }
   }

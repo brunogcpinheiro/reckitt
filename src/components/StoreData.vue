@@ -197,6 +197,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "StoreData",
   data() {
@@ -204,6 +206,7 @@ export default {
       msl: 0,
       sosCheckeds: [],
       canvass: 0,
+      kdbCbs: [],
       kdbCheckeds: [],
       proportional: null
     };
@@ -229,6 +232,12 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      sosCbs: state => state.sos.items
+    }),
+    ...mapActions({
+      fetchSOS: "fetchSOS"
+    }),
     storeName() {
       return this.$store.state.initialData.items.store.name;
     },
@@ -259,6 +268,9 @@ export default {
     kdbCheckedItems() {
       return this.kdbCheckeds.map(kdbChecked => kdbChecked.label);
     }
+  },
+  mounted() {
+    this.fetchSOS();
   }
 };
 </script>
