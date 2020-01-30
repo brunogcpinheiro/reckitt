@@ -6,19 +6,19 @@ export default {
   },
 
   mutations: {
-    fetchSOS(state, sos) {
-      state.items = sos;
+    fetchKDB(state, kdb) {
+      state.items = kdb;
     }
   },
 
   actions: {
-    async fetchSOS(context) {
+    async fetchKDB(context) {
       await firebaseStore
-        .collection("sos")
+        .collection("kdb")
         .get()
         .then(querySnapshot => {
-          const sos = querySnapshot.docs.map(doc => doc.data());
-          context.commit("fetchSOS", sos);
+          const kdb = querySnapshot.docs.map(doc => doc.data());
+          context.commit("fetchKDB", kdb);
         });
     }
   }

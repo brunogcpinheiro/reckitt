@@ -206,7 +206,6 @@ export default {
       msl: 0,
       sosCheckeds: [],
       canvass: 0,
-      kdbCbs: [],
       kdbCheckeds: [],
       proportional: null
     };
@@ -222,21 +221,18 @@ export default {
         kdbTotal: this.kdbSum,
         total: this.totalSum
       });
-
-      //eslint-disable-next-line
-      console.log(this.$store.state.storeData);
-
       this.isLoading = true;
-
       return this.$router.push({ name: "initial" });
     }
   },
   computed: {
     ...mapState({
-      sosCbs: state => state.sos.items
+      sosCbs: state => state.sos.items,
+      kdbCbs: state => state.kdb.items
     }),
     ...mapActions({
-      fetchSOS: "fetchSOS"
+      fetchSOS: "fetchSOS",
+      fetchKDB: "fetchKDB"
     }),
     storeName() {
       return this.$store.state.initialData.items.store.name;
@@ -270,7 +266,8 @@ export default {
     }
   },
   mounted() {
-    this.fetchSOS();
+    this.fetchSOS;
+    this.fetchKDB;
   }
 };
 </script>

@@ -67,12 +67,7 @@ export default {
         due: this.due,
         user: firebaseAuth.currentUser.email
       });
-
-      //eslint-disable-next-line
-      console.log(this.$store.state.initialData.items);
-
       this.isLoading = true;
-
       return this.$router.push({ name: "store" });
     }
   },
