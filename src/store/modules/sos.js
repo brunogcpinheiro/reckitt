@@ -7,13 +7,13 @@ export default {
 
   mutations: {
     fetchSOS(state, sos) {
-      state.sos = sos;
+      state.items = sos;
     }
   },
 
   getters: {
     allSOS(state) {
-      return state.sos;
+      return state.items;
     }
   },
 

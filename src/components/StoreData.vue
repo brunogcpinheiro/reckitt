@@ -7,7 +7,7 @@
     <div>
       <p>
         <small>Nome da loja.:</small>
-        {{ initialData.items.store.name }}
+        {{ storeName }}
       </p>
     </div>
 
@@ -229,8 +229,8 @@ export default {
     }
   },
   computed: {
-    initialData() {
-      return this.$store.state.initialData;
+    storeName() {
+      return this.$store.state.initialData.items.store.name;
     },
     proportionalResult() {
       return Math.floor((parseInt(this.proportional) / 100) * 40);
